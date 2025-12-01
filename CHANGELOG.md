@@ -5,13 +5,164 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [4.0.0](https://github.com/calliostro/php-discogs-api/releases/tag/v4.0.0) – 2025-12-01
+
+### 🚀 Complete Library Redesign – v4.0 is a Fresh Start
+
+**v4.0.0** represents a fundamental architectural overhaul. This is not an incremental update – it's a complete rewrite prioritizing developer experience, type safety, and minimal code footprint.
+
+### Breaking Changes from v3.x
+
+#### 1. Class Renaming for Consistency
+
+- `DiscogsApiClient` → `DiscogsClient`
+- `ClientFactory` → `DiscogsClientFactory`
+
+#### 2. Method Naming Revolution
+
+**All 60 API methods renamed** following consistent `verb + noun` patterns:
+
+- `artistGet()` → `getArtist()`
+- `artistReleases()` → `listArtistReleases()`
+- `releaseGet()` → `getRelease()`
+- `userEdit()` → `updateUser()`
+- `collectionFolders()` → `listCollectionFolders()`
+- `inventoryGet()` → `getUserInventory()`
+- `listingCreate()` → `createMarketplaceListing()`
+- `ordersGet()` → `getMarketplaceOrders()`
+
+#### 3. Clean Parameter API (No More Arrays)
+
+**Revolutionary method signatures** eliminate array parameters entirely:
+
+```php
+// v3.x (OLD)
+$artist = $discogs->artistGet(['id' => 5590213]);
+$search = $discogs->search(['q' => 'Billie Eilish', 'type' => 'artist', 'per_page' => 50]);
+$collection = $discogs->collectionItems(['username' => 'user', 'folder_id' => 0]);
+
+// v4.0 (NEW) - Clean parameters
+$artist = $discogs->getArtist(5590213);
+$search = $discogs->search(query: 'Billie Eilish', type: 'artist', perPage: 50);
+$collection = $discogs->listCollectionItems(username: 'user', folderId: 0);
+```
+
+#### 4. Enhanced Authentication Architecture
+
+**Complete authentication rewrite** with proper security standards:
+
+- **Personal Access Token**: Now requires consumer credentials for proper Discogs Auth format
+- **OAuth 1.0a**: RFC 5849 compliant with PLAINTEXT signatures
+- **Method Renaming**: `createWithToken()` → `createWithPersonalAccessToken()`
+
+```php
+// v3.x (OLD)
+$discogs = ClientFactory::createWithToken('token');
+
+// v4.0 (NEW)
+$discogs = DiscogsClientFactory::createWithPersonalAccessToken('key', 'secret', 'token');
+```
+
+### What's New in v4.0
+
+#### Revolutionary Developer Experience
+
+- **Zero Array Parameters** – Direct method calls: `getArtist(123)` vs `getArtist(['id' => 123])`
+- **Perfect IDE Autocomplete** – Full IntelliSense support with typed parameters
+- **Type Safety** – Automatic parameter validation and conversion (DateTime, booleans, objects)
+- **Self-Documenting Code** – Method names clearly indicate action and resource
+
+#### Ultra-Lightweight Architecture
+
+- **~750 Lines Total** – Minimal codebase covering all 60 Discogs API endpoints
+- **2 Core Classes** – `DiscogsClient` and `DiscogsClientFactory` handle everything
+- **Zero Bloat** – No unnecessary abstractions or complex inheritance hierarchies
+- **Direct API Mapping** – Each method maps 1:1 to a Discogs endpoint
+
+#### Enterprise-Grade Security
+
+- **RFC 5849 OAuth 1.0a** – Industry-standard OAuth implementation
+- **Secure Nonce Generation** – Cryptographically secure random values
+- **ReDoS Protection** – Input validation prevents regular expression attacks
+- **Proper Authentication Headers** – Discogs-compliant auth format
+
+#### Comprehensive Type Safety
+
+- **Strict Parameter Validation** – Only camelCase parameters from PHPDoc accepted
+- **Automatic Type Conversion** – DateTime → ISO 8601, boolean → "1"/"0" for queries
+- **Required Parameter Enforcement** – `null` values rejected for required parameters
+- **Object Support** – Custom objects with `__toString()` method automatically converted
+
+### Migration Impact
+
+**This is a complete breaking change.** Every method call in your codebase will need updating:
+
+1. **Update class names**: `DiscogsApiClient` → `DiscogsClient`, `ClientFactory` → `DiscogsClientFactory`
+2. **Update method names**: Use the complete mapping table in [UPGRADE.md](UPGRADE.md)
+3. **Remove all arrays**: Convert array parameters to positional parameters
+4. **Update authentication**: Personal tokens now require consumer credentials
+
+### Design Goals
+
+**v4.0 prioritizes long-term developer experience:**
+
+- **Cleaner Code**: Direct method calls without array parameters
+- **Better IDE Support**: Full autocomplete and type checking
+- **Consistent API**: All methods follow the same naming pattern
+- **Type Safety**: Catch errors at development time, not runtime
+
+### Added Features
+
+- **Complete OAuth 1.0a Support** with `OAuthHelper` class for full authorization flows
+- **Enhanced Error Handling** with clear exception messages for migration issues
+- **Integration Test Suite** with comprehensive authentication level testing
+- **CI/CD Integration** with automatic rate limiting and retry logic
+- **Static Analysis** – PHPStan Level 8 compliance with zero errors
+- **Performance Optimizations** – Config caching and reduced file I/O operations
+- **Consistent Class Naming** – `DiscogsClient` and `DiscogsClientFactory` for better clarity
+
+### Migration Resources
+
+- **Complete Method Mapping**: See [UPGRADE.md](UPGRADE.md) for all 60 method name changes
+- **Parameter Examples**: Detailed before/after code samples for common operations
+- **Authentication Guide**: Step-by-step migration for all authentication types
+- **Automated Scripts**: Bash/sed commands to help identify and replace common patterns
+
+---
+
+## [3.1.0](https://github.com/calliostro/php-discogs-api/releases/tag/v3.1.0) – 2025-09-09
+
+### Added
+
+- **OAuth 1.0a Helper Methods** – Complete OAuth flow support with a separate OAuthHelper class
+  - `getRequestToken()` – Get temporary request token for authorization flow
+  - `getAuthorizationUrl()` – Generate user authorization URL
+  - `getAccessToken()` – Exchange request token for permanent access token
+- **Clean Authentication API** – Dedicated methods for different authentication types
+  - `createWithPersonalAccessToken()` – Clean 3-parameter method for Personal Access Tokens
+  - `createWithOAuth()` – Refined 4-parameter method for OAuth 1.0a tokens only
+- **Enhanced OAuth Documentation** – Comprehensive OAuth workflow examples and security best practices
+- **OAuth Unit Tests** – Full test coverage for new OAuth helper methods and authentication methods
+
+### Changed
+
+- **BREAKING**: ClientFactory methods now accept array|GuzzleClient parameters (following LastFm pattern)
+- **Authentication API Redesign** – Cleaner separation between Personal Access Token and OAuth 1.0a authentication
+- Updated all default User-Agent strings to version `3.1.0`
+- Enhanced OAuth client creation with a proper PLAINTEXT signature method
+- Documentation restructured for better usability
+
+### Fixed
+
+- OAuth request token method now uses a proper HTTP method (GET instead of POST)
+- OAuth signature generation follows Discogs API requirements exactly
+- PHPStan Level 8 compatibility with proper type annotations for OAuth responses
 
 ## [3.0.1](https://github.com/calliostro/php-discogs-api/releases/tag/v3.0.1) – 2025-09-09
 
 ### Added
 
-- Complete PHPDoc coverage for all 62 Discogs API endpoints
+- Complete PHPDoc coverage for all 60 Discogs API endpoints
 - Missing @method annotations for 22 additional API methods
 - Full IDE autocomplete support for inventory, collection, and marketplace operations
 
@@ -33,8 +184,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Ultra-lightweight 2-class architecture: `ClientFactory` and `DiscogsApiClient`
-- Magic method API calls: `$client->artistGet(['id' => '108713'])`
-- Complete API coverage: 65+ endpoints across all Discogs areas
+- Magic method API calls: `$client->artistGet(['id' => '5590213'])`
+- Complete API coverage: 60 endpoints across all Discogs areas
 - Multiple authentication methods: OAuth, Personal Token, or anonymous
 - Modern PHP 8.1–8.5 support with strict typing
 - 100% test coverage with 43 comprehensive tests

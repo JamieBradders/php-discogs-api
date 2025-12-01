@@ -1,6 +1,6 @@
 {
     "name": "calliostro/php-discogs-api",
-    "description": "Ultra-lightweight Discogs API client for PHP 8.1+ with modern Guzzle-based implementation — Only two classes, service descriptions, zero bloat",
+    "description": "Lightweight Discogs API client for PHP 8.1+ with modern developer comfort — Clean parameter API and minimal dependencies",
     "type": "library",
     "keywords": [
         "php",
@@ -14,7 +14,10 @@
         "guzzle",
         "library",
         "php8",
-        "lightweight"
+        "lightweight",
+        "clean-api",
+        "modern-php",
+        "minimal-dependencies"
     ],
     "license": "MIT",
     "authors": [
@@ -55,10 +58,14 @@
         }
     },
     "scripts": {
-        "test": "vendor/bin/phpunit",
+        "test": "vendor/bin/phpunit --testsuite=\"Unit Tests\"",
+        "test-integration": "vendor/bin/phpunit --testsuite=\"Integration Tests\"",
+        "test-all": "vendor/bin/phpunit --testsuite=\"All Tests\"",
+        "test-coverage": "vendor/bin/phpunit --testsuite=\"Unit Tests\" --coverage-html coverage --coverage-clover coverage.xml",
+        "test-coverage-all": "vendor/bin/phpunit --testsuite=\"All Tests\" --coverage-html coverage --coverage-clover coverage.xml",
         "cs": "vendor/bin/php-cs-fixer fix --dry-run --diff --verbose",
         "cs-fix": "vendor/bin/php-cs-fixer fix --verbose",
-        "analyse": "phpstan analyse src/ --level=8"
+        "analyse": "phpstan analyse src/ tests/ --level=8"
     },
     "minimum-stability": "stable",
     "prefer-stable": true
