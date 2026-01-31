@@ -22,12 +22,12 @@ composer require calliostro/php-discogs-api
 
 **For basic database access (artists, releases, labels):** No registration needed
 
--   Install and start using basic endpoints immediately
+- Install and start using basic endpoints immediately
 
 **For search and user features:** Registration required
 
--   [Register your application](https://www.discogs.com/settings/developers) at Discogs to get credentials
--   Needed for: search, collections, wantlists, marketplace features
+- [Register your application](https://www.discogs.com/settings/developers) at Discogs to get credentials
+- Needed for: search, collections, wantlists, marketplace features
 
 ### Symfony Integration
 
@@ -58,7 +58,7 @@ $releases = $discogs->listArtistReleases(4470662, 'year', 'desc', 50);
 $results = $discogs->search(q: 'Taylor Swift', type: 'release');
 $releases = $discogs->listArtistReleases(
     artistId: 4470662,
-    sort: 'year',
+    sort: 'year', 
     sortOrder: 'desc',
     perPage: 25
 );
@@ -90,35 +90,35 @@ $identity = $discogs->getIdentity();
 
 ## ✨ Key Features
 
--   **Simple Setup** – Works immediately with public data, easy authentication for advanced features
--   **Complete API Coverage** – All 60 Discogs API endpoints supported
--   **Clean Parameter API** – Natural method calls: `getArtist(123)` with named parameter support
--   **Lightweight Focus** – Minimal codebase with only essential dependencies
--   **Modern PHP Comfort** – Full IDE support, type safety, PHPStan Level 8 without bloat
--   **Secure Authentication** – Full OAuth and Personal Access Token support
--   **Well Tested** – 100% test coverage, PSR-12 compliant
--   **Future-Ready** – PHP 8.1–8.5 compatible (beta/dev testing)
--   **Pure Guzzle** – Modern HTTP client, no custom transport layers
+- **Simple Setup** – Works immediately with public data, easy authentication for advanced features
+- **Complete API Coverage** – All 60 Discogs API endpoints supported  
+- **Clean Parameter API** – Natural method calls: `getArtist(123)` with named parameter support
+- **Lightweight Focus** – Minimal codebase with only essential dependencies
+- **Modern PHP Comfort** – Full IDE support, type safety, PHPStan Level 8 without bloat
+- **Secure Authentication** – Full OAuth and Personal Access Token support
+- **Well Tested** – 100% test coverage, PSR-12 compliant
+- **Future-Ready** – PHP 8.1–8.5 compatible (beta/dev testing)
+- **Pure Guzzle** – Modern HTTP client, no custom transport layers
 
 ## 🎵 All Discogs API Methods as Direct Calls
 
--   **Database Methods** – search(), getArtist(), listArtistReleases(), getRelease(), updateUserReleaseRating(), deleteUserReleaseRating(), getUserReleaseRating(), getCommunityReleaseRating(), getReleaseStats(), getMaster(), listMasterVersions(), getLabel(), listLabelReleases()
--   **Marketplace Methods** – getUserInventory(), getMarketplaceListing(), createMarketplaceListing(), updateMarketplaceListing(), deleteMarketplaceListing(), getMarketplaceFee(), getMarketplaceFeeByCurrency(), getMarketplacePriceSuggestions(), getMarketplaceStats(), getMarketplaceOrder(), getMarketplaceOrders(), updateMarketplaceOrder(), getMarketplaceOrderMessages(), addMarketplaceOrderMessage()
--   **Inventory Export Methods** – createInventoryExport(), listInventoryExports(), getInventoryExport(), downloadInventoryExport()
--   **Inventory Upload Methods** – addInventoryUpload(), changeInventoryUpload(), deleteInventoryUpload(), listInventoryUploads(), getInventoryUpload()
--   **User Identity Methods** – getIdentity(), getUser(), updateUser(), listUserSubmissions(), listUserContributions()
--   **User Collection Methods** – listCollectionFolders(), getCollectionFolder(), createCollectionFolder(), updateCollectionFolder(), deleteCollectionFolder(), listCollectionItems(), getCollectionItemsByRelease(), addToCollection(), updateCollectionItem(), removeFromCollection(), getCustomFields(), setCustomFields(), getCollectionValue()
--   **User Wantlist Methods** – getUserWantlist(), addToWantlist(), updateWantlistItem(), removeFromWantlist()
--   **User Lists Methods** – getUserLists(), getUserList()
+- **Database Methods** – search(), getArtist(), listArtistReleases(), getRelease(), updateUserReleaseRating(), deleteUserReleaseRating(), getUserReleaseRating(), getCommunityReleaseRating(), getReleaseStats(), getMaster(), listMasterVersions(), getLabel(), listLabelReleases()
+- **Marketplace Methods** – getUserInventory(), getMarketplaceListing(), createMarketplaceListing(), updateMarketplaceListing(), deleteMarketplaceListing(), getMarketplaceFee(), getMarketplaceFeeByCurrency(), getMarketplacePriceSuggestions(), getMarketplaceStats(), getMarketplaceOrder(), getMarketplaceOrders(), updateMarketplaceOrder(), getMarketplaceOrderMessages(), addMarketplaceOrderMessage()
+- **Inventory Export Methods** – createInventoryExport(), listInventoryExports(), getInventoryExport(), downloadInventoryExport()
+- **Inventory Upload Methods** – addInventoryUpload(), changeInventoryUpload(), deleteInventoryUpload(), listInventoryUploads(), getInventoryUpload()
+- **User Identity Methods** – getIdentity(), getUser(), updateUser(), listUserSubmissions(), listUserContributions()
+- **User Collection Methods** – listCollectionFolders(), getCollectionFolder(), createCollectionFolder(), updateCollectionFolder(), deleteCollectionFolder(), listCollectionItems(), getCollectionItemsByRelease(), addToCollection(), updateCollectionItem(), removeFromCollection(), getCustomFields(), setCustomFields(), getCollectionValue()
+- **User Wantlist Methods** – getUserWantlist(), addToWantlist(), updateWantlistItem(), removeFromWantlist()
+- **User Lists Methods** – getUserLists(), getUserList()
 
-_All Discogs API endpoints are supported with clean documentation — see [Discogs API Documentation](https://www.discogs.com/developers/) for complete method reference_
+*All Discogs API endpoints are supported with clean documentation — see [Discogs API Documentation](https://www.discogs.com/developers/) for complete method reference*
 
 > 💡 **Note:** Some endpoints require special permissions (seller accounts, data ownership).
 
 ## 📋 Requirements
 
--   **php** ^8.1
--   **guzzlehttp/guzzle** ^6.5 || ^7.0
+- **php** ^8.1
+- **guzzlehttp/guzzle** ^6.5 || ^7.0
 
 ## ⚙️ Configuration
 
@@ -162,7 +162,7 @@ Get credentials at [Discogs Developer Settings](https://www.discogs.com/settings
 ### Quick Reference
 
 | What you want to do     | Method                            | What you need    |
-| ----------------------- | --------------------------------- | ---------------- |
+|-------------------------|-----------------------------------|------------------|
 | Get artist/release info | `create()`                        | Nothing          |
 | Search the database     | `createWithConsumerCredentials()` | Register app     |
 | Access your collection  | `createWithPersonalAccessToken()` | Personal token   |
@@ -238,9 +238,9 @@ MIT License – see [LICENSE](LICENSE) file.
 
 ## 🙏 Acknowledgments
 
--   [Discogs](https://www.discogs.com/) for the excellent API
--   [Guzzle](https://docs.guzzlephp.org/) for an HTTP client
--   Previous PHP Discogs implementations for inspiration
+- [Discogs](https://www.discogs.com/) for the excellent API
+- [Guzzle](https://docs.guzzlephp.org/) for an HTTP client  
+- Previous PHP Discogs implementations for inspiration
 
 ---
 
